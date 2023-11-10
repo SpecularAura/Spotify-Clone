@@ -1,7 +1,7 @@
 - clone the repository
 - create virtual environment `python -m venv .\venv `
 - activate the environment `.\venv\Scripts\activate`
-- `pip install requirements.txt`
+- `pip install -r requirements.txt`
 - Flask setup complete
 - go to frontend directory `cd frontend`
 - `npm install`
