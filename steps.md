@@ -1,0 +1,10 @@
+- clone the repository
+- create virtual environment `python -m venv .\venv `
+- activate the environment `.\venv\Scripts\activate`
+- `pip install requirements.txt`
+- Flask setup complete
+- go to frontend directory `cd frontend`
+- `npm install`
+- `npm run build`
+- After it completes go to parent directory `cd ..`
+- `python .\app.py`
