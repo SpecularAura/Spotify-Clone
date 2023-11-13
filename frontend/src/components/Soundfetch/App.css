@@ -36,11 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.wrapper {
-  display: flex; /* Use flexbox to make the children adjacent */
-  align-items: flex-start; /* Align items to the top */
-}
-
-/* You can add more specific styles for Sidebar and App1 if needed */
-
