@@ -11,7 +11,7 @@
     - `npm run build`
     - Open the frontend directory in VSCode to work with the frontend
 
-# For frontend development in VS Code:
+#### For frontend development in VS Code:
     a. Click on the gear icon on the bottom left
     b. Go to Profiles
     c. Click on Import Profile
