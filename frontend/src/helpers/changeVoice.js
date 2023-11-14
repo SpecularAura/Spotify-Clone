@@ -1,9 +1,8 @@
-self.AudioContext = self.AudioContext || self.webkitAudioContext;
 async function churchTransform(audioBuffer) {
   let ctx = new OfflineAudioContext(
     audioBuffer.numberOfChannels,
     audioBuffer.length,
-    audioBuffer.sampleRate
+    audioBuffer.sampleRate,
   );
 
   // Source
@@ -13,7 +12,7 @@ async function churchTransform(audioBuffer) {
   // Reverb
   let convolver = ctx.createConvolver();
   convolver.buffer = await ctx.decodeAudioData(
-    await (await fetch("/church.wav")).arrayBuffer()
+    await (await fetch("/audio_masks/church.wav")).arrayBuffer(),
   );
 
   // Create graph
