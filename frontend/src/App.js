@@ -8,14 +8,14 @@ import BottomBar from "./components/BottomBar";
 function App() {
   return (
     <>
-    <SongState>
-    <Router>
-			<div className="wrapper">
-				<Sidebar/>
-				{/* <Content/> */}
-			</div>
-			<BottomBar/>
-		</Router>
+      <SongState>
+        <Router>
+          <div className="wrapper">
+            <Sidebar />
+            {/* <Content/> */}
+          </div>
+          <BottomBar />
+        </Router>
       </SongState>
     </>
   );
