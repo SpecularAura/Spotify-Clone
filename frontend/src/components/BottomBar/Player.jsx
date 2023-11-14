@@ -55,6 +55,25 @@ const Player = ({audioElem, isplaying, setisplaying, currentSong, setCurrentSong
     
   }
 
+  const changeVoice = async () => {
+    const arrayBuffer = await (await fetch(currentSong?.src)).arrayBuffer();
+    let ctx = new AudioContext();
+    const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+    let outputAudioBuffer = await changeVoice(audioBuffer);
+    let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
+    let audioUrl = window.URL.createObjectURL(outputWavBlob);
+    setCurrentSong({
+      id: Math.floor(Math.random() * 100),
+      title: "Modified Voice",
+      description: "Original Soundtrack",
+      artist: "Me",
+      image:
+        "https://i.scdn.co/image/ab67706c0000da84fcb8b92f2615d3261b8eb146",
+      type: "album",
+      src: audioUrl,
+    })
+  };
+
   return (
     <div className='player_container'>
       <div className="title">
@@ -68,8 +87,9 @@ const Player = ({audioElem, isplaying, setisplaying, currentSong, setCurrentSong
       <div className="controls">
         <BsFillSkipStartCircleFill className='btn_action' onClick={skipBack}/>
         {isplaying ? <BsFillPauseCircleFill className='btn_action pp' onClick={PlayPause}/> : <BsFillPlayCircleFill className='btn_action pp' onClick={PlayPause}/>}
-        <BsFillSkipEndCircleFill className='btn_action' onClick={skiptoNext}/>        
+        <BsFillSkipEndCircleFill className='btn_action' onClick={skiptoNext}/>
       </div>
+      <button>Click to change voice</button>
     </div>
   
   )
