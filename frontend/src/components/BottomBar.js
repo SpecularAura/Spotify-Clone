@@ -1,34 +1,45 @@
 // BottomBar.js
-import React from 'react';
-import songContext from '../context/SongContext';
-import { useRef, useState, useEffect, useContext } from 'react';
-import Player from '../components/BottomBar/Player1';
+import React from "react";
+import songContext from "../context/SongContext";
+import { useRef, useState, useEffect, useContext } from "react";
+import Player from "../components/BottomBar/Player1";
 
 function BottomBar() {
-    const context = useContext(songContext)
-    console.log(context)
-    const {songs, setSongs, isplaying, setisplaying, currentSong, setCurrentSong}=context
-  
-    const audioElem = useRef();
-  
-    useEffect(() => {
-      if (isplaying) {
-        audioElem.current.play();
-      } else {
-        audioElem.current.pause();
-      }
-    }, [isplaying, currentSong]);
-  
-    const onPlaying = () => {
-      const duration = audioElem.current.duration;
-      const ct = audioElem.current.currentTime;
-  
-      setCurrentSong({
-        ...currentSong,
-        progress: (ct / duration) * 100,
-        length: duration,
-      });
-    };
+  const context = useContext(songContext);
+  console.log(context);
+  const {
+    songs,
+    setSongs,
+    isplaying,
+    setisplaying,
+    currentSong,
+    setCurrentSong,
+  } = context;
+
+  const audioElem = useRef();
+
+  useEffect(() => {
+    if (isplaying) {
+      audioElem.current.play();
+    } else {
+      audioElem.current.pause();
+    }
+  }, [isplaying, currentSong]);
+
+  const onPlaying = () => {
+    const duration = audioElem.current.duration;
+    const ct = audioElem.current.currentTime;
+
+    setCurrentSong({
+      ...currentSong,
+      progress: (ct / duration) * 100,
+      length: duration,
+    });
+  };
+
+  useEffect(() => {
+    console.log(currentSong.url);
+  }, []);
   return (
     <>
       <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} />

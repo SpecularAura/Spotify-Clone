@@ -4,6 +4,9 @@ import { Icon } from "../../Icons";
 import songContext from "../../context/SongContext";
 import CustomRange from "../CustomRange";
 import FullScreenPlayer from "../FullScreenPlayer";
+import churchTransform from "../../helpers/changeVoice";
+import audioBufferToWaveBlob from "../../helpers/audioBufferToWaveBlob";
+import megaphoneTransform from "../../helpers/megaphoneTransform";
 
 const Player = ({ audioElem }) => {
   const context = useContext(songContext);
@@ -13,7 +16,9 @@ const Player = ({ audioElem }) => {
     isplaying,
     setisplaying,
     currentSong,
-    setCurrentSong, ct, setCt
+    setCurrentSong,
+    ct,
+    setCt,
   } = context;
 
   const fsRef = useRef();
@@ -25,7 +30,6 @@ const Player = ({ audioElem }) => {
 
   const currentTime = audioElem.current ? audioElem.current.currentTime : 0;
   const duration = audioElem.current ? audioElem.current.duration : 0;
-
 
   const PlayPause = () => {
     setisplaying(!isplaying);
@@ -43,7 +47,6 @@ const Player = ({ audioElem }) => {
   };
   const progress = (ct / currentSong.length) * 100;
 
-
   const skipBack = () => {
     const index = songs.findIndex((x) => x.title == currentSong.title);
     if (index == 0) {
@@ -51,7 +54,7 @@ const Player = ({ audioElem }) => {
     } else {
       setCurrentSong(songs[index - 1]);
     }
-    setCt(0)
+    setCt(0);
   };
 
   const skiptoNext = () => {
@@ -62,7 +65,27 @@ const Player = ({ audioElem }) => {
     } else {
       setCurrentSong(songs[index + 1]);
     }
-    setCt(0)
+    setCt(0);
+  };
+
+  const changeVoice = async () => {
+    console.log(currentSong.url);
+    const arrayBuffer = await (await fetch(currentSong?.url)).arrayBuffer();
+    let ctx = new AudioContext();
+    const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+    let outputAudioBuffer = await megaphoneTransform(audioBuffer);
+    let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
+    let audioUrl = window.URL.createObjectURL(outputWavBlob);
+    console.log(currentSong.url);
+    setCurrentSong({
+      id: Math.floor(Math.random() * 100),
+      title: "Modified Voice",
+      description: "Original Soundtrack",
+      artist: "Me",
+      image: "https://i.scdn.co/image/ab67706c0000da84fcb8b92f2615d3261b8eb146",
+      type: "album",
+      url: audioUrl,
+    });
   };
 
   function formatTime(timeInSeconds) {
@@ -143,24 +166,30 @@ const Player = ({ audioElem }) => {
 
           <div className="w-full flex items-center mt-1.5 gap-x-2">
             <div className="text-[0.688rem] text-white text-opacity-70">
-            {formatTime(currentTime)}
-                    </div>
+              {formatTime(currentTime)}
+            </div>
 
-          <CustomRange
-        value={progress}
-        onChange={(value) => {
-          const newTime = (value / 100) * audioElem.current.duration; 
-          setCt(newTime);
-        }}
-        onClick={checkWidth}
-      />
+            <CustomRange
+              value={progress}
+              onChange={(value) => {
+                const newTime = (value / 100) * audioElem.current.duration;
+                setCt(newTime);
+              }}
+              onClick={checkWidth}
+            />
 
-<div className="text-[0.688rem] text-white text-opacity-70">
-{formatTime(duration)}
-                    </div>
-    </div>
+            <div className="text-[0.688rem] text-white text-opacity-70">
+              {formatTime(duration)}
+            </div>
+          </div>
         </div>
         <div className="min-w-[11.25rem] w-[30%] flex items-center justify-end">
+          <button
+            onClick={changeVoice}
+            className="w-8 h-8 flex items-center justify-center text-white text-opacity-70 hover:text-opacity-100"
+          >
+            <Icon size={16} name="plus" />
+          </button>
           <button className="w-8 h-8 flex items-center justify-center text-white text-opacity-70 hover:text-opacity-100">
             <Icon size={16} name="lyrics" />
           </button>
@@ -186,15 +215,15 @@ const Player = ({ audioElem }) => {
           </button>
         </div>
         <div ref={fsRef}>
-                {isFullscreen && (
-                  <FullScreenPlayer
-                    toggle={toggle}
-                    // state={state}
-                    // controls={controls}
-                    // volumeIcon={volumeIcon}
-                  />
-                )}
-            </div>
+          {isFullscreen && (
+            <FullScreenPlayer
+              toggle={toggle}
+              // state={state}
+              // controls={controls}
+              // volumeIcon={volumeIcon}
+            />
+          )}
+        </div>
       </div>
     </>
   );
