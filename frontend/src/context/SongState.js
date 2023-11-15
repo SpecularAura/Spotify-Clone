@@ -1,5 +1,5 @@
-import React from 'react'
-import songContext from './SongContext'
+import React from "react";
+import songContext from "./SongContext";
 import { songsdata } from "../components/BottomBar/audios";
 import { useRef, useState, useEffect } from "react";
 
@@ -17,4 +17,4 @@ const audioElem = useRef();
   )
 }
 
-export default SongState
+export default SongState;

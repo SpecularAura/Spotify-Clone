@@ -56,7 +56,6 @@ function Sidebar() {
       {/* <button onClick={toggleSidebar}>Toggle Sidebar</button> */}
 
       {/* {sidebarOpen && <SidebarCover />} */}
-      
     </aside>
   );
 }
