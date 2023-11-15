@@ -71,6 +71,7 @@ const Player = ({audioElem, isplaying, setisplaying, currentSong, setCurrentSong
         <BsFillSkipEndCircleFill className='btn_action' onClick={skiptoNext}/>        
       </div>
     </div>
+    
   
   )
 }
