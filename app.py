@@ -1,9 +1,13 @@
 from flask import Flask, render_template, send_from_directory, jsonify, send_file
 import io
+import os
+import dotenv
 import requests
 app = Flask(__name__, 
             static_url_path='/static', 
             static_folder='frontend/build/static')
+
+dotenv.load_dotenv()
 
 @app.route('/')
 def home():
@@ -13,7 +17,7 @@ def home():
 # This route is to show that the backend is able to retrieve and send songs from SoundCloud
 @app.route('/api/getSong')
 def getSong():
-   CLIENT_ID = '9jJYDKHcEdy3IbZHsTAooey6e3VYbZ6G'
+   CLIENT_ID = os.getenv('CLIENT_ID')
    api_url = f"https://api-v2.soundcloud.com/charts?kind=top&genre=soundcloud%3Agenres%3Aall-music&client_id={CLIENT_ID}&limit=10"
    try:
       response = requests.get(api_url)
@@ -52,7 +56,7 @@ def getSong():
    
    except Exception as e:
       print(e)
-      return jsonify({'error': 'Gadbad hai idhar'}), 500
+      return jsonify({'error': 'Unrecognized Error'}), 500
 
 
 if __name__ == '__main__':
