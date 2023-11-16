@@ -51,7 +51,7 @@ function Sidebar() {
 
       <Playlists />
 
-      <DownloadApp />
+      {/* <DownloadApp /> */}
 
       {/* <button onClick={toggleSidebar}>Toggle Sidebar</button> */}
 

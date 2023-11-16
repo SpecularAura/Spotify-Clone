@@ -1,39 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const SoundCloudTracks = () => {
-  const [soundcloudData, setSoundcloudData] = useState([]);
+function Content() {
+  const [audio, setAudio] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/soundcloud-tracks');
-        const data = await response.json();
-        console.log('Data from server:', data);
-        setSoundcloudData(data);
-      } catch (error) {
-        console.error('Error fetching SoundCloud data:', error);
-      }
-    };
-  
-    fetchData();
-  }, []);
-  
+  const playAudio = () => {
+    fetch('http://localhost:5000/stream')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      })
+      .then(data => {
+        const audioUrl = URL.createObjectURL(data);
+        const newAudio = new Audio(audioUrl);
+        newAudio.play();
+        setAudio(newAudio);
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+      });
+  };
+
+  const pauseAudio = () => {
+    if (audio) {
+      audio.pause();
+    }
+  };
 
   return (
     <div>
-      <h1>SoundCloud Tracks</h1>
-      {soundcloudData && soundcloudData.length > 0 ? (
-  <ul>
-    {soundcloudData.map(track => (
-      <li key={track.id}>{track.title}</li>
-    ))}
-  </ul>
-) : (
-  <p>No SoundCloud tracks available.</p>
-)}
-
+      <button onClick={playAudio}>Play Audio</button><br />
+      <button onClick={pauseAudio}>Pause Audio</button>
     </div>
   );
-};
+}
 
-export default SoundCloudTracks;
+export default Content;
