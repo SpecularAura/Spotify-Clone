@@ -151,6 +151,16 @@ function FullScreenPlayer({ toggle }) {
             </button>
               </div>
 
+              <div className="flex items-center absolute bottom-3 right-6 gap-x-3">
+              <button
+              onClick={toggle}
+              className="w-8 h-8 flex items-center justify-center text-white text-opacity-70 hover:text-opacity-100"
+            >
+              <Icon size={24} name="fullScreenOff" />
+            </button>
+
+              </div>
+
 			 
 
 
