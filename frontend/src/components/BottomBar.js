@@ -43,7 +43,7 @@ function BottomBar() {
   return (
     <>
       <audio
-        src={`/api/stream?song=${currentSong.title}&artist=${currentSong.artist}`}
+        src={currentSong.url}
         ref={audioElem}
         onTimeUpdate={onPlaying}
       />
