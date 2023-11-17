@@ -28,8 +28,8 @@ def stream():
         foo.download([youtube_url])
 
     print(buffer.getbuffer().nbytes)
+    buffer.seek(0)  # Move the buffer position to the beginning
     return send_file(buffer, mimetype='audio/mpeg')
 
-
 if __name__ == '__main__':
-   app.run(debug=True)
+    app.run(debug=True)

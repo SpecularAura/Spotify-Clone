@@ -1,7 +1,8 @@
+// BottomBar.js
 import React from "react";
 import songContext from "../context/SongContext";
 import { useRef, useState, useEffect, useContext } from "react";
-import Player from "../components/BottomBar/Player";
+import Player from "../components/BottomBar/Player1";
 
 function BottomBar() {
   const context = useContext(songContext);
@@ -9,8 +10,8 @@ function BottomBar() {
   const {
     songs,
     setSongs,
-    isPlaying,
-    setIsPlaying,
+    isplaying,
+    setisplaying,
     currentSong,
     setCurrentSong,
   } = context;
@@ -18,12 +19,12 @@ function BottomBar() {
   const audioElem = useRef();
 
   useEffect(() => {
-    if (isPlaying) {
+    if (isplaying) {
       audioElem.current.play();
     } else {
       audioElem.current.pause();
     }
-  }, [isPlaying, currentSong]);
+  }, [isplaying, currentSong]);
 
   const onPlaying = () => {
     const duration = audioElem.current.duration;
@@ -35,19 +36,17 @@ function BottomBar() {
       length: duration,
     });
   };
+
+  useEffect(() => {
+    console.log(currentSong.url);
+  }, []);
   return (
     <>
       <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
       <div className="h-24 bg-footer border-t border-white border-opacity-5">
-        <Player
-          songs={songs}
-          setSongs={setSongs}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          audioElem={audioElem}
-          currentSong={currentSong}
-          setCurrentSong={setCurrentSong}
-        />
+        <Player audioElem={audioElem} />
+      </div>
       </div>
     </>
   );

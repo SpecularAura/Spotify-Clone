@@ -5,17 +5,23 @@ import { useRef, useState, useEffect } from "react";
 
 function SongState(props) {
   const [songs, setSongs] = useState(songsdata);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isplaying, setisplaying] = useState(false);
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
+  const [ct, setCt] = useState(0);
+  const audioElem = useRef();
+
   return (
     <songContext.Provider
       value={{
         songs,
         setSongs,
-        isPlaying,
-        setIsPlaying,
+        isplaying,
+        setisplaying,
         currentSong,
         setCurrentSong,
+        ct,
+        setCt,
+        audioElem,
       }}
     >
       {props.children}

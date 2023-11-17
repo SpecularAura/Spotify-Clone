@@ -15,4 +15,13 @@
     .scrollable {
         scroll-behavior: smooth;
     }
+    /* Add this in your Tailwind CSS stylesheet or configure it in your build process */
+
+/* Hide the default range thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  
 }
