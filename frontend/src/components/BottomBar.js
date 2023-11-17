@@ -43,8 +43,10 @@ function BottomBar() {
   return (
     <>
       <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
       <div className="h-24 bg-footer border-t border-white border-opacity-5">
         <Player audioElem={audioElem} />
+      </div>
       </div>
     </>
   );

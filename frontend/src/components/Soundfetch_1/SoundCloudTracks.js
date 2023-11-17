@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { songsdata } from '../BottomBar/audios';
+import Section from "./Section";
 
 function Content() {
   const [audio, setAudio] = useState(null);
@@ -29,9 +31,30 @@ function Content() {
   };
 
   return (
-    <div>
+    <div className='overflow-y-auto h-screen'>
+
       <button onClick={playAudio}>Play Audio</button><br />
       <button onClick={pauseAudio}>Pause Audio</button>
+	
+		<div className="grid gap-y-8">
+			<Section
+				title="Recently played"
+				more="/blabla"
+				items={songsdata}
+			/>
+			<Section
+				title="Shows to try"
+				more="/blabla"
+				items={songsdata}
+			/>
+			<Section
+				title="Made For Tayfun Erbilen"
+				more="/blabla"
+				items={songsdata}
+			/>
+		</div>
+
+
     </div>
   );
 }
