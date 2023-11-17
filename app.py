@@ -1,15 +1,14 @@
 from flask import Flask, send_from_directory, send_file
-from flask_cors import CORS  # Import the CORS module
 import io
 from yt_dlp import YoutubeDL
 from contextlib import redirect_stdout
-
-app = Flask(__name__, static_url_path='/static', static_folder='frontend/build')
-CORS(app)  # Enable CORS for all routes
+app = Flask(__name__, 
+            static_url_path='/static', 
+            static_folder='frontend/build/static')
 
 @app.route('/')
 def home():
-    return send_from_directory('frontend/build', 'index.html')
+   return send_from_directory('frontend/build', 'index.html')
 
 @app.route('/stream')
 def stream():
@@ -18,7 +17,7 @@ def stream():
         "outtmpl": "-",
         'logtostderr': True,
         'format': 'mp3/bestaudio/best',
-        'postprocessors': [{
+        'postprocessors': [{  # Extract audio using ffmpeg
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
         }]
@@ -28,6 +27,7 @@ def stream():
     with redirect_stdout(buffer), YoutubeDL(ctx) as foo:
         foo.download([youtube_url])
 
+    print(buffer.getbuffer().nbytes)
     buffer.seek(0)  # Move the buffer position to the beginning
     return send_file(buffer, mimetype='audio/mpeg')
 
