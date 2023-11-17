@@ -14,6 +14,15 @@
 // ]
 exports.songsdata = [
   {
+    title: "Seaside",
+    artist: "Haux",
+    image: "https://i.scdn.co/image/ab67616d0000b27340a402bdfb921950752e0d5c",
+    type: "artist",
+    // description: "Test Description",
+    id: "0qlwDRhrYcE5JC07JbXTer",
+    url: "http://127.0.0.1:5000/api/stream?song=Seaside&artist=Haux",
+  },
+  {
     id: 1,
     title: "heyyyyy",
     description: "Original Soundtrack",
