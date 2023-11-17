@@ -18,7 +18,7 @@ function SongItem({ item }) {
   } = context;
 
   const updateCurrent = () => {
-    setCurrentSong(songsdata[item.id - 1]);
+    setCurrentSong(songsdata[songsdata.findIndex(el => el.id == item.id)]);
   };
 
   return (
