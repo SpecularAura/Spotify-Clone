@@ -8,36 +8,31 @@ function SongItem({ item }) {
   const context = useContext(songContext);
   const {
     songs,
-    setSongs,
-    isplaying,
-    setisplaying,
-    currentSong,
-    setCurrentSong,
-    ct,
-    setCt,
+    setCurrentSong
   } = context;
 
   const updateCurrent = () => {
-    setCurrentSong(songsdata[songsdata.findIndex(el => el.id == item.id)]);
+    setCurrentSong(songs[songs.findIndex((el) => el.id == item.id)]);
   };
 
   return (
     <NavLink
       key={item.id}
       to="/"
-      className={"bg-footer p-4 rounded hover:bg-active group"}
+      className={
+        "bg-footer p-4 rounded transition-all duration-200 ease-in hover:bg-active group"
+      }
     >
       <div className="pt-[100%] relative mb-4">
-        
         <img
           src={item.image}
           className={`absolute inset-0 object-cover w-full h-full `}
         />
         <button
           onClick={updateCurrent}
-          className={`w-10 h-10 rounded-full bg-primary absolute group-hover:flex group-focus:flex bottom-2 right-2 items-center justify-center `}
+          className={`w-11 h-11 transition-all duration-200 ease-in rounded-full text-black bg-primary opacity-0 absolute flex bottom-0 right-2 items-center justify-center group-hover:opacity-100 group-hover:bottom-2 hover:scale-110`}
         >
-          <Icon size={16} name="play" />
+          <Icon size={20} name="play" isBlack={true} />
         </button>
       </div>
       <h6 className="overflow-hidden overflow-ellipsis whitespace-nowrap text-base font-semibold">
