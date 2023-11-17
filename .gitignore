@@ -2,6 +2,9 @@
 
 .env
 *.json
+!package.json
+!package-lock.json
+.cache
 
 # dependencies
 **/node_modules
