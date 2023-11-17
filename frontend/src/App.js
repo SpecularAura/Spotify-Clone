@@ -5,6 +5,7 @@ import "./App.css";
 import SongState from "./context/SongState";
 import BottomBar from "./components/BottomBar";
 import SoundCloudTracks from "./components/Soundfetch_1/SoundCloudTracks";
+import Test from "./components/Test";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
 				<Sidebar/>
         {/* <App1/> */}
 				{/* <Content/> */}
-        <SoundCloudTracks/>
+        {/* <SoundCloudTracks/> */}
+        <Test/>
 			</div>
 			<BottomBar/>
 		</Router>

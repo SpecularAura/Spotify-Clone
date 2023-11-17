@@ -8,12 +8,6 @@ import DownloadApp from "../components/Sidebar/DownloadApp";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
-  // const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  // const toggleSidebar = () => {
-  //   setSidebarOpen(!sidebarOpen);
-  // };
-
   return (
     <aside className={`w-60 pt-6 flex flex-shrink-0 flex-col bg-black`}>
       <Link to="#" className="mb-7 px-6">

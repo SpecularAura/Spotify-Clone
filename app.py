@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory, send_file, request, jsonify
+from flask_cors import CORS
 import json
 import io
 import os
@@ -9,13 +10,14 @@ from yt_dlp import YoutubeDL
 from ytmusicapi import YTMusic
 from contextlib import redirect_stdout
 
+
 # For environment variables
 dotenv.load_dotenv()
 
 app = Flask(__name__, 
             static_url_path='/', 
             static_folder='frontend/build/')
-
+CORS(app)
 # Spotify API Setup
 spotify_client_id = os.getenv('SPOTIFY_CLIENT_ID')
 spotify_client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
