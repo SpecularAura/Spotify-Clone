@@ -6,12 +6,10 @@ import { songsdata } from "../BottomBar/audios";
 
 function SongItem({ item }) {
   const context = useContext(songContext);
-  const {
-    songs,
-    setCurrentSong
-  } = context;
+  const { songs, setCurrentSong } = context;
 
   const updateCurrent = () => {
+    // TODO: Check by replacing with item
     setCurrentSong(songs[songs.findIndex((el) => el.id == item.id)]);
   };
 
@@ -39,7 +37,6 @@ function SongItem({ item }) {
       <h6 className="overflow-hidden overflow-ellipsis whitespace-nowrap text-base font-semibold">
         {item.title}
       </h6>
-      
     </NavLink>
   );
 }

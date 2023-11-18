@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory, send_file, request, jsonify
-from flask_cors import CORS
+from recommendations.recommender import getRecommendations
 import json
 import io
 import os
@@ -17,7 +17,7 @@ dotenv.load_dotenv()
 app = Flask(__name__, 
             static_url_path='/', 
             static_folder='frontend/build/')
-CORS(app)
+
 # Spotify API Setup
 spotify_client_id = os.getenv('SPOTIFY_CLIENT_ID')
 spotify_client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
@@ -25,6 +25,45 @@ sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_
 
 # Youtube Search API setup
 ytmusic = YTMusic()
+
+"""
+Get audio features for a track using the spotify track id
+"""
+def get_audio_features(trackId):
+    results = sp.audio_features(trackId)
+    print(results)
+    return results[0]
+
+"""
+Get track metadata details for a list of tracks using track id
+"""
+def get_track_metadata(trackId_list):
+    results = sp.tracks(trackId_list)
+
+    data = []
+    for track in results["tracks"]:
+        track_name = track['name']
+        track_id = track['id']
+        track_type = track['album']['album_type']
+        preview_url = track['preview_url']
+        artist_name = track['artists'][0]['name']
+        thumbnail_url=track['album']['images'][0]['url']
+        data.append({
+            "title": track_name,
+            "artist": artist_name,
+            "image": thumbnail_url,
+            "type": "artist" if track_type == "single" else "album",
+            "id": track_id,
+            "preview_url": preview_url
+        })
+
+    if not data:
+        print(f"No results on Spotify.")
+    
+    with open("recommendations_processed_results.json", "w") as file:
+        json.dump(data, file, indent=2)
+        
+    return data
 
 """
 Search songs from spotify using a search term that is the name of the song
@@ -112,6 +151,21 @@ def stream():
     print(buffer.getbuffer().nbytes)
     buffer.seek(0)  # Move the buffer position to the beginning
     return send_file(buffer, mimetype='audio/mpeg')
+
+@app.route('/api/recommend/<trackId>')
+def recommend(trackId):
+    audio_features = get_audio_features(trackId)
+    keys = ['acousticness', 'danceability',
+       'duration_ms', 'energy', 'instrumentalness', 'key', 'liveness',
+       'loudness', 'mode', 'speechiness', 'tempo', 'time_signature', 'valence']
+    feature_vector = [audio_features.get(key) for key in keys]
+    recommendations = getRecommendations(feature_vector)
+
+    with open("recommendation_results.json", "w") as file:
+        json.dump(recommendations, file, indent=2)
+
+    song_data = get_track_metadata([track.get("id") for track in recommendations])
+    return jsonify(song_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

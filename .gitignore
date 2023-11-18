@@ -5,6 +5,9 @@
 !package.json
 !package-lock.json
 .cache
+recommendations/data/mergedFile.csv
+recommendations/model/
+**/__pycache__/
 
 # dependencies
 **/node_modules
