@@ -5,7 +5,6 @@ import { Icon } from "../Icons";
 function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [audioSrc, setAudioSrc] = useState("");
   const context = useContext(songContext);
   const {
     songs,
@@ -33,11 +32,10 @@ function Search() {
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(data);
-        setSongs(data);
       });
   };
 
-  const playSong = (artist, title, id) => {
+  const playSong = (artist, title, image, id) => {
     fetch(`http://127.0.0.1:5000/api/stream?artist=${artist}&song=${title}`)
       .then((response) => {
         if (!response.ok) {
@@ -47,12 +45,11 @@ function Search() {
       })
       .then((blob) => {
         const objectURL = URL.createObjectURL(blob);
-        setAudioSrc(objectURL);
         setCurrentSong({
           id: id,
           title: title,
           artist: artist,
-          image: "", // Set the image as needed
+          image: image,
           url: objectURL,
         });
       })
@@ -104,7 +101,9 @@ function Search() {
                 className="absolute inset-0 object-cover w-full h-full"
               />
               <button
-                onClick={() => playSong(result.artist, result.title, result.id)}
+                onClick={() =>
+                  playSong(result.artist, result.title, result.image, result.id)
+                }
                 className={`w-11 h-11 transition-all duration-200 ease-in rounded-full text-black bg-primary opacity-0 absolute flex bottom-0 right-2 items-center justify-center group-hover:opacity-100 group-hover:bottom-2 hover:scale-110`}
               >
                 <Icon size={20} name="play" isBlack={true} />
@@ -117,12 +116,9 @@ function Search() {
             {/* <p className="line-clamp-2 text-link text-sm mt-1">
               {result.artist}
             </p> */}
-
-            
           </div>
         ))}
       </div>
- 
     </div>
   );
 }

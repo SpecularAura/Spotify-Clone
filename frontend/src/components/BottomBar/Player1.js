@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import { useAudio, useFullscreen, useToggle } from "react-use";
 import { Icon } from "../../Icons";
 import songContext from "../../context/SongContext";
@@ -10,6 +10,7 @@ import megaphoneTransform from "../../helpers/megaphoneTransform";
 
 const Player = ({ audioElem }) => {
   const context = useContext(songContext);
+
   const {
     songs,
     setSongs,
@@ -32,7 +33,11 @@ const Player = ({ audioElem }) => {
   const duration = audioElem.current ? audioElem.current.duration : 0;
 
   const PlayPause = () => {
-    setisplaying(!isplaying);
+    if (currentSong) {
+      setisplaying(!isplaying);
+    } else {
+      setisplaying(false);
+    }
   };
 
   const checkWidth = (e) => {
@@ -45,7 +50,7 @@ const Player = ({ audioElem }) => {
       setCt(newTime);
     }
   };
-  const progress = (ct / currentSong.length) * 100;
+  const progress = (ct / (currentSong ? currentSong.length : 0)) * 100;
 
   const skipBack = () => {
     const index = songs.findIndex((x) => x.title == currentSong.title);
@@ -70,22 +75,24 @@ const Player = ({ audioElem }) => {
 
   const changeVoice = async () => {
     console.log(currentSong.url);
-    const arrayBuffer = await (await fetch(currentSong?.url)).arrayBuffer();
-    let ctx = new AudioContext();
-    const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
-    let outputAudioBuffer = await megaphoneTransform(audioBuffer);
-    let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
-    let audioUrl = window.URL.createObjectURL(outputWavBlob);
-    console.log(currentSong.url);
-    setCurrentSong({
-      id: Math.floor(Math.random() * 100),
-      title: "Modified Voice",
-      description: "Original Soundtrack",
-      artist: "Me",
-      image: "https://i.scdn.co/image/ab67706c0000da84fcb8b92f2615d3261b8eb146",
-      type: "album",
-      url: audioUrl,
-    });
+    if (currentSong) {
+      const arrayBuffer = await (await fetch(currentSong?.url)).arrayBuffer();
+      let ctx = new AudioContext();
+      const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+      let outputAudioBuffer = await megaphoneTransform(audioBuffer);
+      let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
+      let audioUrl = window.URL.createObjectURL(outputWavBlob);
+      console.log(currentSong.url);
+      setCurrentSong({
+        id: Math.floor(Math.random() * 100),
+        title: `${currentSong.title} Modified`,
+        description: "Original Soundtrack",
+        artist: currentSong.artist,
+        image: currentSong.image,
+        type: currentSong.type,
+        url: audioUrl,
+      });
+    }
   };
 
   function formatTime(timeInSeconds) {

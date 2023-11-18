@@ -1,6 +1,6 @@
 import { Icon } from "../../Icons";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import songContext from "../../context/SongContext";
 import { songsdata } from "../BottomBar/audios";
 
@@ -8,9 +8,27 @@ function SongItem({ item }) {
   const context = useContext(songContext);
   const { songs, setCurrentSong } = context;
 
-  const updateCurrent = () => {
-    // TODO: Check by replacing with item
-    setCurrentSong(songs[songs.findIndex((el) => el.id == item.id)]);
+  const playSong = (artist, title, image, id) => {
+    fetch(`http://127.0.0.1:5000/api/stream?artist=${artist}&song=${title}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const objectURL = URL.createObjectURL(blob);
+        setCurrentSong({
+          id: id,
+          title: title,
+          artist: artist,
+          image: image,
+          url: objectURL,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching audio:", error);
+      });
   };
 
   return (
@@ -27,7 +45,7 @@ function SongItem({ item }) {
           className={`absolute inset-0 object-cover w-full h-full `}
         />
         <button
-          onClick={updateCurrent}
+          onClick={() => playSong(item.artist, item.title, item.image, item.id)}
           className={`w-11 h-11 transition-all duration-200 ease-in rounded-full text-black bg-primary opacity-0 absolute flex bottom-0 right-2 items-center justify-center group-hover:opacity-100 group-hover:bottom-2 hover:scale-110`}
         >
           <Icon size={20} name="play" isBlack={true} />
