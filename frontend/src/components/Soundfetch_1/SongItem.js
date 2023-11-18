@@ -40,10 +40,11 @@ function SongItem({ item }) {
           <Icon size={16} name="play" />
         </button>
       </div>
+
       <h6 className="overflow-hidden overflow-ellipsis whitespace-nowrap text-base font-semibold">
         {item.title}
       </h6>
-      <p className="line-clamp-2 text-link text-sm mt-1">{item.description}</p>
+      
     </NavLink>
   );
 }
