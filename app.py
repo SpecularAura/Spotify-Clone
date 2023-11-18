@@ -91,6 +91,8 @@ def search():
 def stream():
     artist = request.args.get("artist")
     song = request.args.get("song")
+    print(song)
+    print(artist)
     song_yt_id = get_youtube_link(song, artist)
     youtube_url = f"https://www.youtube.com/watch?v={song_yt_id}"
     ctx = {
