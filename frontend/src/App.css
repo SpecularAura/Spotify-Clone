@@ -37,10 +37,32 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #646464;
+  /* transition: all; */
+  transition-duration: 200ms;
+  transition-property: all;
+  transition-timing-function: ease-in;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #909090;
+}
+
 .wrapper {
   display: flex; /* Use flexbox to make the children adjacent */
   align-items: flex-start; /* Align items to the top */
 }
 
 /* You can add more specific styles for Sidebar and App1 if needed */
-

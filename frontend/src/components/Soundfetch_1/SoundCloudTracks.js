@@ -21,7 +21,7 @@ function Content() {
   }, [currentSong?.id]);
 
   return (
-    <div className="overflow-y-auto h-100">
+    <div className="overflow-y-auto h-100 p-4">
       <div className="grid gap-y-8">
         <Section
           title="Recently played"

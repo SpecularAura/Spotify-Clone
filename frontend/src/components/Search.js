@@ -36,26 +36,13 @@ function Search() {
   };
 
   const playSong = (artist, title, image, id) => {
-    fetch(`http://127.0.0.1:5000/api/stream?artist=${artist}&song=${title}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.blob();
-      })
-      .then((blob) => {
-        const objectURL = URL.createObjectURL(blob);
-        setCurrentSong({
-          id: id,
-          title: title,
-          artist: artist,
-          image: image,
-          url: objectURL,
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching audio:", error);
-      });
+    setCurrentSong({
+      id: id,
+      title: title,
+      artist: artist,
+      image: image,
+      url: `http://127.0.0.1:5000/api/stream?artist=${artist}&song=${title}`,
+    });
   };
 
   return (

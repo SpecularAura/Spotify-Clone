@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from "react";
 
 function SongState(props) {
   const [songs, setSongs] = useState(songsdata);
-  const history = useRef();
+  // const history = useRef();
   const [isplaying, setisplaying] = useState(false);
   const [currentSong, setCurrentSong] = useState();
   const [ct, setCt] = useState(0);
@@ -16,13 +16,10 @@ function SongState(props) {
     console.log("From local Storage");
     console.log(songsHistory);
     if (songsHistory) {
-      history.current = songsHistory;
+      setSongs(songsHistory);
     } else {
-      history.current = songsdata;
+      setSongs(songsdata);
     }
-    console.log("Ref Value:");
-    console.log(history.current);
-    setSongs(history.current);
   }, []);
 
   useEffect(() => {
@@ -44,10 +41,8 @@ function SongState(props) {
   }, [currentSong?.id]);
 
   useEffect(() => {
-    history.current = songs;
     console.log(songs);
-    console.log(history.current);
-    localStorage.setItem("songsHistory", JSON.stringify(history.current));
+    localStorage.setItem("songsHistory", JSON.stringify(songs));
   }, [JSON.stringify(songs)]);
 
   return (
