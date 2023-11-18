@@ -18,15 +18,6 @@ function Search() {
     setCt,
   } = context;
 
-  //   useEffect(() => {
-  //     const audioPlayer = document.getElementById('audioPlayer');
-
-  //     if (audioPlayer && audioSrc) {
-  //       audioPlayer.src = audioSrc;
-  //       audioPlayer.play();
-  //     }
-  //   }, [audioSrc]);
-
   const updateCurrent = () => {
     setCurrentSong(songs[songs.findIndex((el) => el.id == searchResults.id)]);
   };
@@ -72,20 +63,23 @@ function Search() {
 
   return (
     <div className="overflow-y-auto h-screen">
-      
       <div className="mr-auto ml-4 relative mt-2">
-    
-        <label htmlFor="search_box" className="text-black w-12 h-10 flex items-center justify-center absolute top-0 left-0"><Icon size={24} name="search" />
-			</label>
-        {/* <input
+        <label
+          htmlFor="search_box"
+          className="text-black w-12 h-10 flex items-center justify-center absolute top-0 left-0"
+        >
+          <Icon size={24} name="search" />
+        </label>
+
+        <input
+          autoFocus={true}
           type="text"
           id="search_box"
-          placeholder="Enter song name"
-          value={searchTerm}
+          className="h-10 pl-12 outline-none text-black font-medium bg-white rounded-3xl text-sm placeholder-black/50 max-w-full w-[22.75rem]"
+          placeholder="What do you want to listen to?"
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border rounded py-1 px-2"
-        /> */}
-        <input autoFocus={true} type="text" id="search_box" className="h-10 pl-12 outline-none text-black font-medium bg-white rounded-3xl text-sm placeholder-black/50 max-w-full w-[22.75rem]" placeholder="What do you want to listen to?" onChange={(e) => setSearchTerm(e.target.value)}  value={searchTerm}/>
+          value={searchTerm}
+        />
         <button
           onClick={handleSearch}
           className="bg-primary hover:bg-opacity-50 text-white rounded py-1 px-2 ml-2"
@@ -97,47 +91,38 @@ function Search() {
         id="results"
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
       > */}
-        <div className="grid grid-cols-5 gap-x-6">
-          {searchResults.map((result) => (
-            <div
-              key={result.id}
-              className="bg-footer p-4 rounded hover:bg-active group"
-            >
-
-              <div className="pt-[100%] relative mb-4">
-                <img
-                  src={result.image}
-                  alt={result.title}
-                  className="absolute inset-0 object-cover w-full h-full"
-                />
-                <button
-                  onClick={() =>
-                    playSong(result.artist, result.title, result.id)
-                  }
-                  className={`w-10 h-10 rounded-full bg-primary absolute group-hover:flex group-focus:flex bottom-2 right-2 items-center justify-center `}
-                >
-                  <Icon size={16} name="play" />
-                </button>
-              </div>
-
-              <div>
-               
-                <h6 className="overflow-hidden overflow-ellipsis whitespace-nowrap text-base font-semibold">
-                {result.title}
-      </h6>
-      <p className="line-clamp-2 text-link text-sm mt-1">{result.artist}</p>
-              </div>
-              {/* <button
-              onClick={() => playSong(result.artist, result.title, result.id)}
-              className="bg-blue-500 text-white rounded mt-2 py-1 px-2"
-            >
-              Play
-            </button> */}
+      <div className="grid grid-cols-5 gap-x-6">
+        {searchResults.map((result) => (
+          <div
+            key={result.id}
+            className="bg-footer p-4 rounded transition-all duration-200 ease-in hover:bg-active group"
+          >
+            <div className="pt-[100%] relative mb-4">
+              <img
+                src={result.image}
+                alt={result.title}
+                className="absolute inset-0 object-cover w-full h-full"
+              />
+              <button
+                onClick={() => playSong(result.artist, result.title, result.id)}
+                className={`w-11 h-11 transition-all duration-200 ease-in rounded-full text-black bg-primary opacity-0 absolute flex bottom-0 right-2 items-center justify-center group-hover:opacity-100 group-hover:bottom-2 hover:scale-110`}
+              >
+                <Icon size={20} name="play" isBlack={true} />
+              </button>
             </div>
-          ))}
-        </div>
-      {/* </div> */}
-      {/* <audio controls id="audioPlayer" className="mt-4"></audio> */}
+
+            <h6 className="overflow-hidden overflow-ellipsis whitespace-nowrap text-base font-semibold">
+              {result.title}
+            </h6>
+            {/* <p className="line-clamp-2 text-link text-sm mt-1">
+              {result.artist}
+            </p> */}
+
+            
+          </div>
+        ))}
+      </div>
+ 
     </div>
   );
 }
