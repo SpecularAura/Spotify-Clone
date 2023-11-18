@@ -1,5 +1,4 @@
 import Sidebar from "./components/Sidebar";
-import App1 from "./components/Soundfetch/App";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import SongState from "./context/SongState";
@@ -12,7 +11,7 @@ function App() {
     <>
       <SongState>
         <Router>
-          <div className="wrapper">
+          <div className="flex h-[calc(100vh-theme(space.24))]">
             <Sidebar />
             {/* <App1/> */}
             {/* <Content/> */}

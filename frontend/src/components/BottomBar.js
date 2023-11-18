@@ -6,7 +6,7 @@ import Player from "../components/BottomBar/Player1";
 
 function BottomBar() {
   const context = useContext(songContext);
-  console.log(context);
+  // console.log(context);
   const {
     songs,
     setSongs,
@@ -36,17 +36,9 @@ function BottomBar() {
       length: duration,
     });
   };
-
-  useEffect(() => {
-    console.log(currentSong.url);
-  }, []);
   return (
     <>
-      <audio
-        src={currentSong.url}
-        ref={audioElem}
-        onTimeUpdate={onPlaying}
-      />
+      <audio src={currentSong?.url} ref={audioElem} onTimeUpdate={onPlaying} />
       <div style={{ position: "relative", zIndex: 1 }}>
         <div className="h-24 bg-footer border-t border-white border-opacity-5">
           <Player audioElem={audioElem} />
