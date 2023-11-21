@@ -2,8 +2,8 @@ import React, { useRef, useContext, useEffect, useState } from "react";
 import { useAudio, useFullscreen, useToggle } from "react-use";
 import { Icon } from "../../Icons";
 import songContext from "../../context/SongContext";
-import CustomRange from "../CustomRange";
-import FullScreenPlayer from "../FullScreenPlayer";
+import CustomRange from "./CustomRange";
+import FullScreenPlayer from "../../pages/FullScreenPlayer";
 import churchTransform from "../../helpers/changeVoice";
 import audioBufferToWaveBlob from "../../helpers/audioBufferToWaveBlob";
 import megaphoneTransform from "../../helpers/megaphoneTransform";
@@ -32,7 +32,6 @@ const Player = ({ audioElem }) => {
   const currentTime = audioElem.current ? audioElem.current.currentTime : 0;
   const duration = audioElem.current ? audioElem.current.duration : 0;
 
-
   const PlayPause = () => {
     if (currentSong) {
       setisplaying(!isplaying);
@@ -41,20 +40,6 @@ const Player = ({ audioElem }) => {
     }
   };
 
-  // const checkWidth = (e) => {
-  //   if (clickRef.current) {
-  //     let width = clickRef.current.clientWidth;
-  //     const offset = e.nativeEvent.offsetX;
-  //     const divprogress = (offset / width) * 100;
-  //     const newTime = (divprogress / 100) * audioElem.current.duration; 
-  //     if (isplaying) {
-  //       audioElem.current.currentTime = newTime;
-  //     }
-  //     setCt(newTime);
-  //   }
-  // };
- 
-  // const progress = (ct / (currentSong ? currentSong.length : 0)) * 100;
   const [progress, setProgress] = useState(0);
   const skipBack = () => {
     const index = songs.findIndex((x) => x.title == currentSong.title);
@@ -127,7 +112,7 @@ const Player = ({ audioElem }) => {
   useEffect(() => {
     // Set the initial progress value to 0 when the component mounts
     setProgress(0);
-  }, []); 
+  }, []);
   return (
     <>
       <div className="flex px-4 justify-between items-center h-full">
@@ -197,36 +182,34 @@ const Player = ({ audioElem }) => {
           </div>
 
           <div className="w-full flex items-center mt-1.5 gap-x-2">
-        <div className="text-[0.688rem] text-white text-opacity-70">
-          {formatTime(currentTime)}
-        </div>
+            <div className="text-[0.688rem] text-white text-opacity-70">
+              {formatTime(currentTime)}
+            </div>
 
-        <CustomRange
-            value={progress}
-            onChange={(value) => {
-              const newTime = (value / 100) * audioElem.current.duration;
-              setCt(newTime);
-              audioElem.current.currentTime = newTime;
-            }}
-            onClick={() => {
-              audioElem.current.pause();
-            }}
-            onDragStart={() => {
-              audioElem.current.pause();
-            }}
-            onDragEnd={() => {
-              if (isplaying) {
-                audioElem.current.play();
-              }
-            }}
-          />
+            <CustomRange
+              value={progress}
+              onChange={(value) => {
+                const newTime = (value / 100) * audioElem.current.duration;
+                setCt(newTime);
+                audioElem.current.currentTime = newTime;
+              }}
+              onClick={() => {
+                audioElem.current.pause();
+              }}
+              onDragStart={() => {
+                audioElem.current.pause();
+              }}
+              onDragEnd={() => {
+                if (isplaying) {
+                  audioElem.current.play();
+                }
+              }}
+            />
 
-
-
-        <div className="text-[0.688rem] text-white text-opacity-70">
-          {formatTime(duration)}
-        </div>
-      </div>
+            <div className="text-[0.688rem] text-white text-opacity-70">
+              {formatTime(duration)}
+            </div>
+          </div>
         </div>
         <div className="min-w-[11.25rem] w-[30%] flex items-center justify-end">
           <button
@@ -244,13 +227,6 @@ const Player = ({ audioElem }) => {
           <button className="w-8 h-8 flex items-center justify-center text-white text-opacity-70 hover:text-opacity-100">
             <Icon size={16} name="device" />
           </button>
-
-          {/* <button
-            onClick={controls[state.muted ? 'unmute' : 'mute']}
-            className="w-8 h-8 flex items-center justify-center text-white text-opacity-70 hover:text-opacity-100"
-          >
-            <Icon size={16} name={volumeIcon}/>
-          </button> */}
 
           <button
             onClick={toggle}

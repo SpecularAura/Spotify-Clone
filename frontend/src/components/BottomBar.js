@@ -2,7 +2,7 @@
 import React from "react";
 import songContext from "../context/SongContext";
 import { useRef, useState, useEffect, useContext } from "react";
-import Player from "../components/BottomBar/Player1";
+import Player from "./BottomBar/Player";
 
 function BottomBar() {
   const context = useContext(songContext);

@@ -1,8 +1,8 @@
-import { Icon } from "../../Icons";
+import { Icon } from "../Icons";
 import { NavLink } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import songContext from "../../context/SongContext";
-import { songsdata } from "../BottomBar/audios";
+import songContext from "../context/SongContext";
+// import { songsdata } from "./BottomBar/audios";
 
 function SongItem({ item }) {
   const context = useContext(songContext);

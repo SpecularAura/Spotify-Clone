@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import songContext from "../../context/SongContext";
-import Section from "./Section";
+import songContext from "../context/SongContext";
+import Section from "../components/Section";
 
-function Content() {
+function HomePage() {
   const context = useContext(songContext);
   const { songs, setSongs, currentSong } = context;
   const [recommendedSongs, setRecommendedSongs] = useState([]);
@@ -40,4 +40,4 @@ function Content() {
   );
 }
 
-export default Content;
+export default HomePage;

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import songContext from "../context/SongContext";
 import { Icon } from "../Icons";
 
-function Search() {
+function SearchPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const context = useContext(songContext);
@@ -110,4 +110,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default SearchPage;
