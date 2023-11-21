@@ -6,7 +6,7 @@
 !package-lock.json
 .cache
 recommendations/data/mergedFile.csv
-recommendations/model/
+recommendations/model/*
 **/__pycache__/
 
 # dependencies

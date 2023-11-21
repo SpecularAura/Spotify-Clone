@@ -31,7 +31,7 @@ Get audio features for a track using the spotify track id
 """
 def get_audio_features(trackId):
     results = sp.audio_features(trackId)
-    print(results)
+    # print(results)
     return results[0]
 
 """
