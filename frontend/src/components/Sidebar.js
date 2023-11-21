@@ -3,8 +3,6 @@ import logo from "../img/logo.svg";
 import { Icon } from "../Icons";
 import Menu from "../components/Sidebar/Menu";
 import Playlists from "../components/Sidebar/Playlists";
-import DownloadApp from "../components/Sidebar/DownloadApp";
-// import SidebarCover from "./Sidebar/SidebarCover";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
@@ -44,12 +42,6 @@ function Sidebar() {
       </nav>
 
       <Playlists />
-
-      {/* <DownloadApp /> */}
-
-      {/* <button onClick={toggleSidebar}>Toggle Sidebar</button> */}
-
-      {/* {sidebarOpen && <SidebarCover />} */}
     </aside>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import songContext from "../context/SongContext";
 import { Icon } from "../Icons";
+import SongItem from "../components/SongItem";
 
 function SearchPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -71,39 +72,9 @@ function SearchPage() {
           Search
         </button>
       </div>
-      {/* <div
-        id="results"
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-      > */}
-      <div className="grid grid-cols-5 gap-x-6">
-        {searchResults.map((result) => (
-          <div
-            key={result.id}
-            className="bg-footer p-4 rounded transition-all duration-200 ease-in hover:bg-active group"
-          >
-            <div className="pt-[100%] relative mb-4">
-              <img
-                src={result.image}
-                alt={result.title}
-                className="absolute inset-0 object-cover w-full h-full"
-              />
-              <button
-                onClick={() =>
-                  playSong(result.artist, result.title, result.image, result.id)
-                }
-                className={`w-11 h-11 transition-all duration-200 ease-in rounded-full text-black bg-primary opacity-0 absolute flex bottom-0 right-2 items-center justify-center group-hover:opacity-100 group-hover:bottom-2 hover:scale-110`}
-              >
-                <Icon size={20} name="play" isBlack={true} />
-              </button>
-            </div>
-
-            <h6 className="overflow-hidden overflow-ellipsis whitespace-nowrap text-base font-semibold">
-              {result.title}
-            </h6>
-            {/* <p className="line-clamp-2 text-link text-sm mt-1">
-              {result.artist}
-            </p> */}
-          </div>
+      <div className="grid grid-cols-5 gap-x-6 gap-y-5">
+        {searchResults.map((result, idx) => (
+          <SongItem item={result} key={idx} />
         ))}
       </div>
     </div>
