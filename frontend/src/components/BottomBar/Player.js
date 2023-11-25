@@ -4,10 +4,7 @@ import { Icon } from "../../Icons";
 import songContext from "../../context/SongContext";
 import CustomRange from "./CustomRange";
 import FullScreenPlayer from "../../pages/FullScreenPlayer";
-import churchTransform from "../../helpers/changeVoice";
-import audioBufferToWaveBlob from "../../helpers/audioBufferToWaveBlob";
-import megaphoneTransform from "../../helpers/megaphoneTransform";
-
+import { useVoiceModulation } from "@specular-aura/voice-modulation";
 const Player = ({ audioElem }) => {
   const context = useContext(songContext);
 
@@ -62,27 +59,33 @@ const Player = ({ audioElem }) => {
     setCt(0);
   };
 
-  const changeVoice = async () => {
-    console.log(currentSong.url);
-    if (currentSong) {
-      const arrayBuffer = await (await fetch(currentSong?.url)).arrayBuffer();
-      let ctx = new AudioContext();
-      const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
-      let outputAudioBuffer = await megaphoneTransform(audioBuffer);
-      let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
-      let audioUrl = window.URL.createObjectURL(outputWavBlob);
-      console.log(currentSong.url);
-      setCurrentSong({
-        id: Math.floor(Math.random() * 100),
-        title: `${currentSong.title} Modified`,
-        description: "Original Soundtrack",
-        artist: currentSong.artist,
-        image: currentSong.image,
-        type: currentSong.type,
-        url: audioUrl,
-      });
-    }
-  };
+  // const changeVoice = async () => {
+  //   console.log(currentSong.url);
+  //   if (currentSong) {
+  //     const arrayBuffer = await (await fetch(currentSong?.url)).arrayBuffer();
+  //     let ctx = new AudioContext();
+  //     const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+  //     let outputAudioBuffer = await megaphoneTransform(audioBuffer);
+  //     let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
+  //     let audioUrl = window.URL.createObjectURL(outputWavBlob);
+  //     console.log(currentSong.url);
+  //     setCurrentSong({
+  //       id: Math.floor(Math.random() * 100),
+  //       title: `${currentSong.title} Modified`,
+  //       description: "Original Soundtrack",
+  //       artist: currentSong.artist,
+  //       image: currentSong.image,
+  //       type: currentSong.type,
+  //       url: audioUrl,
+  //     });
+  //   }
+  // };
+
+  const changeVoice = useVoiceModulation(
+    currentSong,
+    setCurrentSong,
+    "megaphone"
+  );
 
   function formatTime(timeInSeconds) {
     const minutes = Math.floor(timeInSeconds / 60);
